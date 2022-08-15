@@ -5,5 +5,4 @@ function HomePage() {
     <div className='App'>HomePage</div>
   )
 }
-
 export default HomePage

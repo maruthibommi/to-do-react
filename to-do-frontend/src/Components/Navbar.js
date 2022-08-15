@@ -1,17 +1,33 @@
 import React from 'react'
+
+import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 import '../styles.css'
 
-function Navbar() {
+function Navbar({user}) {
+  
+
+  const CustomLink = ({to,children, ...props}) =>{
+      const resolvedPath = useResolvedPath(to)
+      const isActive = useMatch({ path: resolvedPath.pathname, end: true })
+
+      return (
+      <li className={isActive ? "active" : ""}>
+        <Link to={to} {...props}>
+          {children}
+        </Link>
+      </li>
+    )
+  }
+
   return (
     <nav className='nav'>
-        <a href = "/"  >Homepage</a>
+        <Link to = "/"  >Homepage</Link>
         <ul>
-            <li>
-                <a href = "/Signup" >SignUp</a>
-            </li>
-            <li>
-                <a href = "/Login" >Login</a>
-            </li>
+            
+            {(user.name === "") ? 
+              (<><CustomLink to='/Signup'>SignUp</CustomLink><CustomLink to='/Login'>Login</CustomLink></>) :
+              (<CustomLink to = '/Logout'>Log Out</CustomLink>)
+            }
         </ul>
     </nav>
   )
