@@ -17,6 +17,18 @@ const userDetails = userDatabase
 const [currentUser,setCurrentUser] = useState({name : "", email : ""})
 
 
+
+const addDataIntoCache = (cacheName, url, response) => {
+  const data = new Response(JSON.stringify(response));
+
+  if ('caches' in window) {
+    caches.open(cacheName).then((cache) => {
+      cache.put(url, data);
+      alert('Data Added into cache!')
+    });
+  }
+};
+
 const signUp = (details) =>{
     console.log("details from Signup")
     console.log(details,userDetails)
@@ -24,11 +36,13 @@ const signUp = (details) =>{
     alert("user "+ details.name+" added")
 }
 const signIn = (details) =>{
+
   console.log("details from Log in")
   console.log(details,userDetails)
   setCurrentUser({...currentUser,name : details.name , email : details.email})
+  addDataIntoCache("UserCache",window.location,details)
   alert("user logged in ")
-  
+
 }
 
 const logOut = () => {
@@ -41,7 +55,7 @@ const logOut = () => {
       <Navbar user={currentUser} />
 
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/" element={<HomePage user= {currentUser}/>}></Route>
           {(currentUser.email === "") ?
             (<><Route path="/Login" element={<Loginform signIn={signIn} />}></Route><Route path="/Signup" element={<SignUp signUp={signUp} />}></Route></>) :
             (<Route path="/Logout" element={<Logoutform logOut={logOut} />}></Route>)}
