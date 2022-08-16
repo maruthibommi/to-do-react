@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 
 function SignUp({signUp}) {
 
@@ -6,7 +7,17 @@ function SignUp({signUp}) {
 
     const SignupHandler = (e) => {
         e.preventDefault()
+        const userdetails = {
+            username : user.name,
+            email : user.email,
+            password : user.password
+        }
 
+        axios.post('https://to-do-yagna.herokuapp.com/users/add', userdetails)
+        .then(res => console.log(res.data));
+        
+        
+        
         signUp(user)
     }
 
