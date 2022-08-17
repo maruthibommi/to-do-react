@@ -13,11 +13,11 @@ function SignUp({signUp}) {
             password : user.password
         }
 
-        axios.post('https://to-do-yagna.herokuapp.com/users/add', userdetails)
+        axios.post('http://localhost:5000/users/add', userdetails)
         .then(
             (response) => {
             console.log("data added to backend"); },
-            (error) => {console.log(error)}
+            (error) => {console.log(error.response.data)}
         );
         
         signUp(user)
