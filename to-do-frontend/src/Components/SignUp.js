@@ -14,9 +14,11 @@ function SignUp({signUp}) {
         }
 
         axios.post('https://to-do-yagna.herokuapp.com/users/add', userdetails)
-        .then(res => console.log(res.data));
-        
-        
+        .then(
+            (response) => {
+            console.log("data added to backend"); },
+            (error) => {console.log(error)}
+        );
         
         signUp(user)
     }
